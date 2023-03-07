@@ -218,7 +218,7 @@ namespace SellYourStuffWebApi.Controllers
         private string GetAdImage(string id)
         {
             string imageUrl = string.Empty;
-            string hostUrl = "https://localhost:7230";
+            string hostUrl = "https://sellyourstuff.azurewebsites.net";
             string filepath = GetFilePath(id);
             string imagepath = filepath + "\\image.png";
             if (!System.IO.File.Exists(imagepath))
