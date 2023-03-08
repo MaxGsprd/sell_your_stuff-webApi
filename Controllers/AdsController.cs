@@ -131,7 +131,7 @@ namespace SellYourStuffWebApi.Controllers
             return CreatedAtAction("GetAd", new { id = ad.Id }, ad);
         }
 
-        [HttpPost("uploadImage")]
+        [HttpPost("uploadImage"), AllowAnonymous]
         [RequestSizeLimit(100 * 1024 * 1024)] // = 100MB
         public async Task<ActionResult> UploadImage(int id)
         {
