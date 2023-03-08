@@ -18,7 +18,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options => options.AddPolicy(
         name: "sellyourstuffClient",
-        policy => { policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader(); }
+        policy => { policy.WithOrigins("https://sellyourstuffangular.azurewebsites.net").AllowAnyMethod().AllowAnyHeader(); }
     ));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
