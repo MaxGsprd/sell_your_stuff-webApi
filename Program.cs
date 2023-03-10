@@ -13,27 +13,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<SellYourStuffWebApiContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SellYourStuffWebApi__local") ?? throw new InvalidOperationException("Connection string SellYourStuffWebApiContext not found"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SellYourStuffWebApi") ?? throw new InvalidOperationException("Connection string SellYourStuffWebApiContext not found"));
 });
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen(options =>
-{
-    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-    {
-        Description = "Standard Authorization header using the Bearer scheme (\"bearer {token}\")",
-        In = ParameterLocation.Header,
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey
-    });
-
-    options.OperationFilter<SecurityRequirementsOperationFilter>();
-});
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options => options.AddPolicy(
         name: "sellyourstuffClient",
-        policy => { policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader(); }
+        policy => { policy.WithOrigins("https://sellyourstuffangular.azurewebsites.net").AllowAnyMethod().AllowAnyHeader(); }
     ));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
