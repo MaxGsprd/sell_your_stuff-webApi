@@ -275,23 +275,23 @@ namespace SellYourStuffWebApi.Controllers
         //    }
         //    return imageUrl;
         //}
-        [NonAction]
-        private string GetAdImage(string id)
-        {
-            string imageUrl = string.Empty;
-            string hostUrl = "https://localhost:7235";
-            string filepath = GetFilePath(id);
-            string imagepath = filepath + "\\image.png";
-            if (!System.IO.File.Exists(imagepath))
-            {
-                imageUrl = hostUrl + "/uploads/Ads/no-image.png";
-            }
-            else
-            {
-                imageUrl = hostUrl + "/uploads/Ads/" + id + "/" + "image.png";
-            }
-            return imageUrl;
-        }
+        //[NonAction]
+        //private string GetAdImage(string id)
+        //{
+        //    string imageUrl = string.Empty;
+        //    string hostUrl = "https://localhost:7235";
+        //    string filepath = GetFilePath(id);
+        //    string imagepath = filepath + "\\image.png";
+        //    if (!System.IO.File.Exists(imagepath))
+        //    {
+        //        imageUrl = hostUrl + "/uploads/Ads/no-image.png";
+        //    }
+        //    else
+        //    {
+        //        imageUrl = hostUrl + "/uploads/Ads/" + id + "/" + "image.png";
+        //    }
+        //    return imageUrl;
+        //}
 
     }
 }
