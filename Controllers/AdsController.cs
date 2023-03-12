@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using SellYourStuffWebApi.Data;
 using SellYourStuffWebApi.Interfaces;
 using SellYourStuffWebApi.Models;
+using SellYourStuffWebApi.Models.Dtos;
 using SellYourStuffWebApi.Models.Dtos.AdDtos;
-using SellYourStuffWebApi.Services;
 
 namespace SellYourStuffWebApi.Controllers
 {
@@ -19,14 +19,12 @@ namespace SellYourStuffWebApi.Controllers
         private readonly SellYourStuffWebApiContext _context;
         private readonly IMapper _mapper;
         private readonly IPhotoService _photoService;
-        //private readonly IWebHostEnvironment _environment;
 
         public AdsController(SellYourStuffWebApiContext context, IMapper mapper, IWebHostEnvironment environment, IPhotoService photoService)
         {
             _context = context;
             _mapper = mapper;
             _photoService = photoService;
-            //_environment = environment;
         }
 
         //GET: api/Ads
@@ -34,15 +32,6 @@ namespace SellYourStuffWebApi.Controllers
         public async Task<ActionResult<IEnumerable<AdResponseDto>>> GetAds()
         {
             var ads = await _context.Ad.ToListAsync();
-            //if (ads.Count > 0)
-            //{
-            //    ads.ForEach(ad =>
-            //    {
-            //        string adIdToStrig = ad.Id.ToString();
-            //        ad.AdImage = GetAdImage(adIdToStrig);
-            //    });
-            //}
-            //await _context.SaveChangesAsync();
             return Ok(ads.Select(ad => _mapper.Map<AdResponseDto>(ad)));
         }
 
@@ -51,15 +40,6 @@ namespace SellYourStuffWebApi.Controllers
         public async Task<ActionResult<IEnumerable<AdResponseDto>>> GetAdsByUser(int id)
         {
             var ads = await _context.Ad.Where(ad => ad.User.Id == id).ToListAsync();
-            //if (ads.Count > 0)
-            //{
-            //    ads.ForEach(ad =>
-            //    {
-            //        string adIdToStrig = ad.Id.ToString();
-            //        ad.AdImage = GetAdImage(adIdToStrig);
-            //    });
-            //}
-            //await _context.SaveChangesAsync();
             return Ok(ads.Select(ad => _mapper.Map<AdResponseDto>(ad)));
         }
 
@@ -68,12 +48,7 @@ namespace SellYourStuffWebApi.Controllers
         public async Task<ActionResult<AdResponseDto>> GetAd(int id)
         {
             var ad = await _context.Ad.FindAsync(id);
-
-            if (ad == null)
-            {
-                return NotFound();
-            }
-
+            if (ad == null) return NotFound();
             var adDTO = _mapper.Map<AdResponseDto>(ad);
             return Ok(adDTO);
         }
@@ -82,10 +57,7 @@ namespace SellYourStuffWebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAd(int id, AdRequestDto adDTO)
         {
-            if (id != adDTO.Id)
-            {
-                return BadRequest();
-            }
+            if (id != adDTO.Id) return BadRequest();
 
             var ad = _mapper.Map<Ad>(adDTO);
             _context.Entry(ad).State = EntityState.Modified;
@@ -105,8 +77,6 @@ namespace SellYourStuffWebApi.Controllers
                     throw;
                 }
             }
-
-
             return CreatedAtAction("GetAd", new { id = ad.Id }, ad);
         }
 
@@ -130,7 +100,6 @@ namespace SellYourStuffWebApi.Controllers
             var ad = _mapper.Map<Ad>(newAd);
             _context.Ad.Add(ad);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetAd", new { id = ad.Id }, ad);
         }
 
@@ -156,6 +125,7 @@ namespace SellYourStuffWebApi.Controllers
                 photo.IsPrimary = true;
             }
             ad?.Photos?.Add(photo);
+            _mapper.Map<PhotoDto>(photo);
             await _context.SaveChangesAsync();
             return Ok(201);
         }
@@ -218,31 +188,5 @@ namespace SellYourStuffWebApi.Controllers
         {
             return _context.Ad.Any(e => e.Id == id);
         }
-
-        //[NonAction]
-        //private string GetFilePath(string id)
-        //{
-        //    return this._environment.WebRootPath + "\\Uploads\\Ads\\" + id;
-
-        //}
-
-        //[NonAction]
-        //private string GetAdImage(string id)
-        //{
-        //    string imageUrl = string.Empty;
-        //    string hostUrl = "https://sellyourstuff.azurewebsites.net";
-        //    string filepath = GetFilePath(id);
-        //    string imagepath = filepath + "\\image.png";
-        //    if (!System.IO.File.Exists(imagepath))
-        //    {
-        //        imageUrl = hostUrl + "/uploads/Ads/no-image.png";
-        //    }
-        //    else
-        //    {
-        //        imageUrl = hostUrl + "/uploads/Ads/" + id + "/" + "image.png";
-        //    }
-        //    return imageUrl;
-        //}
-
     }
 }
