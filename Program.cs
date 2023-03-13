@@ -8,7 +8,7 @@ using SellYourStuffWebApi.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var Configuration = builder.Configuration;
 
 builder.Services.AddDbContext<SellYourStuffWebApiContext>(options =>
 {
@@ -16,22 +16,20 @@ builder.Services.AddDbContext<SellYourStuffWebApiContext>(options =>
 });
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-var secretKey = builder.Configuration.GetSection("AppSettings:Key").Value;
-var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options => options.AddPolicy(
         name: "sellyourstuffClient",
         policy => { policy.WithOrigins("https://sellyourstuffangular.azurewebsites.net").AllowAnyMethod().AllowAnyHeader(); }
-    ));
+));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = key,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
         ValidateIssuer = false,
         ValidateAudience = false
     };
@@ -45,6 +43,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+
     app.UseSwagger();
     app.UseSwaggerUI();
 }

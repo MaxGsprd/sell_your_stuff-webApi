@@ -21,7 +21,6 @@
         public virtual Category? Category { get; set; }
         public int ConditionId { get; set; }
         public virtual Condition? Condition { get; set; }
-        public string? AdImage { get; set; }
         public ICollection<Photo>? Photos { get; set; }
     }
 }

@@ -26,9 +26,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-    <Folder Include="wwwroot\Uploads\Ads\" />
-  </ItemGroup>
-
 </Project>
