@@ -20,7 +20,7 @@ namespace SellYourStuffWebApi.Controllers
         private readonly IMapper _mapper;
         private readonly IPhotoService _photoService;
 
-        public AdsController(SellYourStuffWebApiContext context, IMapper mapper, IWebHostEnvironment environment, IPhotoService photoService)
+        public AdsController(SellYourStuffWebApiContext context, IMapper mapper, IPhotoService photoService)
         {
             _context = context;
             _mapper = mapper;
