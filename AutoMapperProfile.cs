@@ -19,6 +19,7 @@ namespace SellYourStuffWebApi
             CreateMap<MessageRequestDto, Message>();
             CreateMap<Message, MessageResponseDto>();
             CreateMap<Photo, PhotoDto>();
+            CreateMap<PhotoDto, Photo>();
         }
     }
 }
