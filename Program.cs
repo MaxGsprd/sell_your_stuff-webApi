@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SellYourStuffWebApi.Data;
 using SellYourStuffWebApi.Interfaces;
@@ -15,8 +16,10 @@ builder.Services.AddDbContext<SellYourStuffWebApiContext>(options =>
 });
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen();
+
+var secretKey = builder.Configuration.GetSection("AppSettings:Key").Value;
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
 builder.Services.AddCors(options => options.AddPolicy(
         name: "sellyourstuffClient",
@@ -28,7 +31,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+        IssuerSigningKey = key,
         ValidateIssuer = false,
         ValidateAudience = false
     };
