@@ -11,7 +11,7 @@ using SellYourStuffWebApi.Models.Dtos.AdDtos;
 
 namespace SellYourStuffWebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Cl-Ad")]
     [ApiController]
     [Authorize]
     public class AdsController : ControllerBase
