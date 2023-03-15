@@ -13,7 +13,6 @@ namespace SellYourStuffWebApi.Models.Dtos.AdDtos
         public Address? Address { get; set; }
         public Category Category { get; set; }
         public Condition? Condition { get; set; }
-        public string? AdImage { get; set; }
         public ICollection<PhotoDto> Photos { get; set; } = new List<PhotoDto>();
     }
 }

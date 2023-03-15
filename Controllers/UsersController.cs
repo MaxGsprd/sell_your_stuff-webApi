@@ -136,7 +136,7 @@ namespace SellYourStuffWebApi.Controllers
 
         //POST api/Users/login
         [HttpPost("login"), AllowAnonymous]
-        public async Task<ActionResult<string>> Login(UserLoginRequestDto loginRequest)
+        public async Task<ActionResult<UserLoginResponseDto>> Login(UserLoginRequestDto loginRequest)
         {
             var user = _context.User.FirstOrDefault(u => u.Name == loginRequest.Name);
             if (user == null)
@@ -150,7 +150,13 @@ namespace SellYourStuffWebApi.Controllers
             }
 
             string token = CreateToken(user);
-            return Ok(token);
+            var result = new UserLoginResponseDto
+            {
+                Id = user.Id,
+                Username = user.Name,
+                Token = token
+            };
+            return Ok(result);
         }
 
         // DELETE: api/Users/5
