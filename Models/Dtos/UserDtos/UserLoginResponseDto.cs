@@ -2,7 +2,8 @@
 {
     public class UserLoginResponseDto
     {
-        public int id;
-        public string token;
+        public int Id;
+        public string Username { get; set; } = string.Empty;
+        public string Token = string.Empty;
     }
 }

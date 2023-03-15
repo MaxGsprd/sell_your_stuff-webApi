@@ -152,8 +152,9 @@ namespace SellYourStuffWebApi.Controllers
             string token = CreateToken(user);
             var result = new UserLoginResponseDto
             {
-                id = user.Id,
-                token = token
+                Id = user.Id,
+                Username = user.Name,
+                Token = token
             };
             return Ok(result);
         }
