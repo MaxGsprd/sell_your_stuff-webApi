@@ -8,13 +8,18 @@ namespace SellYourStuffWebApi.Services
     {
         private readonly Cloudinary cloudinary;
 
+
         public PhotoService(IConfiguration configuration)
         {
+            var cloudinarySettingsCloudName = Environment.GetEnvironmentVariable("CloudinarySettingsCloudName");
+            var cloudinarySettingsApiKey = Environment.GetEnvironmentVariable("CloudinarySettingsApiKey");
+            var cloudinarySettingsApiSecret = Environment.GetEnvironmentVariable("CloudinarySettingsApiSecret");
+
             Account account = new Account(
-                    configuration.GetSection("CloudinarySettings:CloudName").Value,
-                    configuration.GetSection("CloudinarySettings:ApiKey").Value,
-                    configuration.GetSection("CloudinarySettings:ApiSecret").Value
-                );
+                        cloudinarySettingsCloudName,
+                        cloudinarySettingsApiKey,
+                        cloudinarySettingsApiSecret
+                    );
 
             cloudinary = new Cloudinary( account );
         }

@@ -9,9 +9,12 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
 
+var connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+var token = Environment.GetEnvironmentVariable("Token");
+
 builder.Services.AddDbContext<SellYourStuffWebApiContext>(options =>
 {
-    options.UseMySQL(builder.Configuration.GetConnectionString("SellYourStuffWebApi") ?? throw new InvalidOperationException("Connection string SellYourStuffWebApiContext not found"));
+    options.UseNpgsql(connectionString ?? throw new InvalidOperationException("Connection string not found"));
 });
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
@@ -20,7 +23,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options => options.AddPolicy(
         name: "sellyourstuffClient",
-         policy => { policy.WithOrigins("https://sellyourstuff-63568.web.app","http://localhost:4200").AllowAnyMethod().AllowAnyHeader(); }
+         policy => { policy.WithOrigins("https://sellyourstuff-63568.web.app").AllowAnyMethod().AllowAnyHeader(); }
 ));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -28,7 +31,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(token)),
         ValidateIssuer = false,
         ValidateAudience = false
     };
