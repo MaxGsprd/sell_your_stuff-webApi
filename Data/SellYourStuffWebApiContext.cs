@@ -24,7 +24,7 @@ namespace SellYourStuffWebApi.Data
         public DbSet<Category> Category { get; set; } = default!;
         public DbSet<Condition> Condition { get; set; } = default!;
         public DbSet<Message> Message { get; set; } = default!;
-        public DbSet<Role> Role { get; set; } = default!;
+        public DbSet<Roles> Role { get; set; } = default!;
         public DbSet<User> User { get; set; } = default!;
     }
 }

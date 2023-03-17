@@ -20,7 +20,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options => options.AddPolicy(
         name: "sellyourstuffClient",
-         policy => { policy.WithOrigins("https://sellyourstuff-63568.web.app","http://localhost:4200").AllowAnyMethod().AllowAnyHeader(); }
+         policy => { policy.WithOrigins("https://sellyourstuff-63568.web.app").AllowAnyMethod().AllowAnyHeader(); }
 ));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -51,8 +51,8 @@ app.UseStaticFiles();
 app.UseCors("sellyourstuffClient");
 app.UseRouting();
 
-app.UseHsts();
-app.UseHttpsRedirection();
+//app.UseHsts();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

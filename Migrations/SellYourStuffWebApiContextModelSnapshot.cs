@@ -182,7 +182,7 @@ namespace SellYourStuffWebApi.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("SellYourStuffWebApi.Models.Role", b =>
+            modelBuilder.Entity("SellYourStuffWebApi.Models.Roles", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -288,7 +288,7 @@ namespace SellYourStuffWebApi.Migrations
 
             modelBuilder.Entity("SellYourStuffWebApi.Models.User", b =>
                 {
-                    b.HasOne("SellYourStuffWebApi.Models.Role", "Role")
+                    b.HasOne("SellYourStuffWebApi.Models.Roles", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)

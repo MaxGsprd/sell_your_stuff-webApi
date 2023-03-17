@@ -20,14 +20,14 @@ namespace SellYourStuffWebApi.Controllers
 
         // GET: api/Roles
         [HttpGet, AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Role>>> GetRole()
+        public async Task<ActionResult<IEnumerable<Roles>>> GetRole()
         {
             return await _context.Role.ToListAsync();
         }
 
         // GET: api/Roles/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Role>> GetRole(int id)
+        public async Task<ActionResult<Roles>> GetRole(int id)
         {
             var role = await _context.Role.FindAsync(id);
 
@@ -41,7 +41,7 @@ namespace SellYourStuffWebApi.Controllers
 
         // PUT: api/Roles/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRole(int id, Role role)
+        public async Task<IActionResult> PutRole(int id, Roles role)
         {
             if (id != role.Id)
             {
@@ -71,7 +71,7 @@ namespace SellYourStuffWebApi.Controllers
 
         // POST: api/Roles
         [HttpPost]
-        public async Task<ActionResult<Role>> PostRole(Role role)
+        public async Task<ActionResult<Roles>> PostRole(Roles role)
         {
             _context.Role.Add(role);
             await _context.SaveChangesAsync();
