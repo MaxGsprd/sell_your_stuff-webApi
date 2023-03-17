@@ -9,6 +9,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
 
+
 builder.Services.AddDbContext<SellYourStuffWebApiContext>(options =>
 {
     options.UseNpgsql(Configuration.GetConnectionString("SellYourStuffWebApi") ?? throw new InvalidOperationException("Connection string SellYourStuffWebApiContext not found"));
@@ -47,6 +48,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 app.UseStaticFiles();
 app.UseCors("sellyourstuffClient");
 app.UseRouting();
@@ -58,5 +60,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+var testvar = Environment.GetEnvironmentVariable("testVar");
+app.MapGet("/test", () => "test = " + testvar);
 
 app.Run();
