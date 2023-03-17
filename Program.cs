@@ -20,7 +20,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options => options.AddPolicy(
         name: "sellyourstuffClient",
-         policy => { policy.WithOrigins("https://sellyourstuff-63568.web.app").AllowAnyMethod().AllowAnyHeader(); }
+         policy => { policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }
 ));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
