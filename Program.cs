@@ -11,7 +11,7 @@ var Configuration = builder.Configuration;
 
 builder.Services.AddDbContext<SellYourStuffWebApiContext>(options =>
 {
-    options.UseMySQL(builder.Configuration.GetConnectionString("SellYourStuffWebApi") ?? throw new InvalidOperationException("Connection string SellYourStuffWebApiContext not found"));
+    options.UseNpgsql(Configuration.GetConnectionString("SellYourStuffWebApi") ?? throw new InvalidOperationException("Connection string SellYourStuffWebApiContext not found"));
 });
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
