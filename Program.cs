@@ -50,6 +50,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 app.UseStaticFiles();
 app.UseCors("sellyourstuffClient");
 app.UseRouting();
