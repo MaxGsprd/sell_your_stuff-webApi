@@ -10,6 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using SellYourStuffWebApi.Models.Dtos.UserDtos;
+using System.Text;
 
 namespace SellYourStuffWebApi.Controllers
 {
@@ -171,7 +172,6 @@ namespace SellYourStuffWebApi.Controllers
 
             _context.User.Remove(user);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 
@@ -205,7 +205,9 @@ namespace SellYourStuffWebApi.Controllers
                 new Claim(ClaimTypes.Sid, user.Id.ToString())
             };
 
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
+            var configVarToken = Environment.GetEnvironmentVariable("Token");
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configVarToken));
+
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
             var token = new JwtSecurityToken(
                 claims: claims,
