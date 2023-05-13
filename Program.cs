@@ -15,7 +15,7 @@ var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(token));
 
 builder.Services.AddDbContext<SellYourStuffWebApiContext>(options =>
 {
-    options.UseNpgsql(connectionString ?? throw new InvalidOperationException("Connection string not found"));
+    options.UseMySQL(connectionString ?? throw new InvalidOperationException("Connection string not found"));
 });
 
 builder.Services.AddControllers().AddNewtonsoftJson();
@@ -49,7 +49,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+//AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 app.UseStaticFiles();
 app.UseRouting();
 app.UseCors("sellyourstuffClient");
